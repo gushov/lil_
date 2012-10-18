@@ -1,19 +1,21 @@
-/*! lil_ - v0.0.0 - 2012-10-15
- * Copyright (c) 2012 August Hovland; Licensed MIT */
+/*! lil_ - v0.0.0 - 2012-10-18
+ * Copyright (c) 2012 August Hovland <gushov@gmail.com>; Licensed MIT */
 
 /*global provide */
 
 (function (provide) {
 
-  function each(arr, func, ctx) {
+  var _ = {};
+
+  _.each = function (arr, func, ctx) {
 
     if (arr && arr.length) {
       arr.forEach(func, ctx);
     }
 
-  }
+  };
 
-  function eachIn(obj, func) {
+  _.eachIn = function (obj, func) {
 
     var keys = Object.keys(obj) || [];
 
@@ -21,12 +23,9 @@
       func(name, obj[name], i);
     });
 
-  }
+  };
 
-  provide('lil_', {
-    each: each,
-    eachIn: eachIn
-  });
+  provide('lil_', _);
 
 }(typeof module !== 'undefined' ?
     function (a, b) { module.exports = b; } :
