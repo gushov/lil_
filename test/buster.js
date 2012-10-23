@@ -2,7 +2,7 @@ var config = module.exports;
 
 config["lil_ node tests"] = {
   rootPath: "../",
-  env: "node",
+  environment: "node",
   tests: [
     "test/*-test.js"
   ]
