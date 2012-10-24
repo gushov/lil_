@@ -1,4 +1,4 @@
-/*! lil_ - v0.0.0 - 2012-10-23
+/*! lil_ - v0.0.0 - 2012-10-24
  * Copyright (c) 2012 August Hovland <gushov@gmail.com>; Licensed MIT */
 
 /*global provide */
@@ -24,6 +24,15 @@
 
   };
 
+  _.map = function (arr, func, ctx) {
+
+    if (arr && arr.length) {
+      return arr.map(func, ctx);
+    }
+    return [];
+
+  };
+
   _.eachIn = function (obj, func) {
 
     var keys = Object.keys(obj) || [];
@@ -41,6 +50,18 @@
     });
 
     return obj;
+
+  };
+
+  _.pick = function(obj, keys) {
+
+    var picked = {};
+
+    this.each(keys, function (key) {
+      picked[key] = obj[key];
+    });
+
+    return picked;
 
   };
 

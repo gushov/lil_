@@ -26,17 +26,30 @@ buster.testCase("lil_", {
 
   "should iterate until false is returned": function () {
 
-    var cbSpy = this.stub();
-    cbSpy.withArgs(true).returns(true);
-    cbSpy.withArgs(false).returns(false);
     var testArray = [true, true, false, true, true];
     var testArray2 = [true, true, true, true];
+    var cbStub = this.stub();
+    cbStub.returnsArg(0);
 
-    refute(_.every(testArray, cbSpy));
-    assert.equals(cbSpy.callCount, 3);
+    refute(_.every(testArray, cbStub));
+    assert.equals(cbStub.callCount, 3);
 
-    assert(_.every(testArray2, cbSpy));
-    assert.equals(cbSpy.callCount, 7);
+    assert(_.every(testArray2, cbStub));
+    assert.equals(cbStub.callCount, 7);
+
+  },
+
+  "should map the given array": function () {
+
+    var testArray = [1, 2, 3];
+    var cbStub = this.stub();
+    cbStub.returnsArg(0);
+
+    assert.equals(_.map(testArray, cbStub), [1, 2, 3]);
+    assert.calledThrice(cbStub);
+    assert.calledWith(cbStub, 1);
+    assert.calledWith(cbStub, 2);
+    assert.calledWith(cbStub, 3);
 
   },
 
@@ -79,6 +92,25 @@ buster.testCase("lil_", {
     assert.equals(r.butter, '1tsp');
     assert.equals(r.salt, '2tsp');
     assert.equals(r.whiteWine, '1/2cup');
+
+  },
+
+  "should return only selected keys": function () {
+
+    var obj = {
+      x: 'x',
+      b: 'b',
+      z: 'z',
+      c: 'c',
+      d: 'd'
+    };
+    var keys = ['a', 'b', 'c'];
+    var result = _.pick(obj, keys);
+
+    assert.equals(Object.keys(result).length, 3);
+    refute.defined(result.a);
+    assert.equals(result.b, 'b');
+    assert.equals(result.c, 'c');
 
   },
 
