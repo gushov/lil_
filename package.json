@@ -26,7 +26,7 @@
       "type": "MIT"
     }
   ],
-  "main": "dist/lil_.js",
+  "main": "lib/lil_.js",
   "scripts": {
     "test": "grunt buster"
   }

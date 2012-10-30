@@ -12,8 +12,7 @@ config["lil_ browser tests"] = {
   rootPath: "../",
   environment: "browser",
   sources: [
-    "node_modules/lilprovider/dist/lilprovider.js",
-    "lib/lil_.js"
+    "dist/lil_.js"
   ],
   tests: [
     "test/*-test.js"

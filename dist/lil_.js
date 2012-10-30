@@ -1,39 +1,106 @@
-/*! lil_ - v0.0.0 - 2012-10-24
+/*! lil_ - v0.0.0 - 2012-10-30
  * Copyright (c) 2012 August Hovland <gushov@gmail.com>; Licensed MIT */
 
-/*global provide */
+(function (ctx) {
 
-(function (provide) {
+  "use strict";
 
-  var _ = {};
+  var defined = {};
+  var exported = {};
 
-  _.each = function (arr, func, ctx) {
+  function resolve(from, name) {
+
+    if (name.indexOf('.') === -1) {
+      return name;
+    }
+
+    name = name.split('/');
+    from = from ? from.split('/') : [];
+    from.pop();
+
+    if (name[0] === '.') {
+      name.shift();
+    }
+
+    while(name[0] === '..') {
+      name.shift();
+      from.pop();
+    }
+
+    return from.concat(name).join('/');
+
+  }
+
+  //@TODO handle provide/require/define already in scope
+
+  ctx.provide = function (name, module, isDefinition) {
+
+    if (isDefinition) {
+      return defined[name] = module;
+    } else {
+      return exported[name] = module;
+    }
+
+  };
+
+  ctx.require = function (path, canonical) {
+
+    var exports, module;
+    var name = canonical || path;
+
+    if (exported[name]) {
+      return exported[name];
+    } else {
+
+      exports = exported[name] = {};
+      module = { exports: exports };
+      defined[name](function (path) {
+        return ctx.require(path, resolve(name, path));
+      }, module, exports);
+
+      return (exported[name] = module.exports);
+
+    }
+
+  };
+
+}(this));
+ 
+provide('lil_', function (require, module, exports) {
+
+/*jshint curly:true, eqeqeq:true, immed:true, latedef:true,
+  newcap:true, noarg:true, sub:true, undef:true, boss:true,
+  strict:false, eqnull:true, browser:true, node:true */
+
+module.exports = {
+
+  each: function (arr, func, ctx) {
 
     if (arr && arr.length) {
       arr.forEach(func, ctx);
     }
 
-  };
+  },
 
-  _.every = function (arr, func, ctx) {
+  every: function (arr, func, ctx) {
 
     if (arr && arr.length) {
       return arr.every(func, ctx);
     }
     return false;
 
-  };
+  },
 
-  _.map = function (arr, func, ctx) {
+  map: function (arr, func, ctx) {
 
     if (arr && arr.length) {
       return arr.map(func, ctx);
     }
     return [];
 
-  };
+  },
 
-  _.eachIn = function (obj, func) {
+  eachIn: function (obj, func) {
 
     var keys = Object.keys(obj) || [];
 
@@ -41,9 +108,9 @@
       func(name, obj[name], i);
     });
 
-  };
+  },
 
-  _.defaults = function (obj, defaults) {
+  defaults: function (obj, defaults) {
 
     this.eachIn(defaults, function (name, value) {
       if (!obj[name]) { obj[name] = value; }
@@ -51,9 +118,9 @@
 
     return obj;
 
-  };
+  },
 
-  _.pick = function(obj, keys) {
+  pick: function(obj, keys) {
 
     var picked = {};
 
@@ -63,9 +130,9 @@
 
     return picked;
 
-  };
+  },
 
-  _.pushOn = function (obj, prop, value) {
+  pushOn: function (obj, prop, value) {
 
     if (obj[prop] && typeof obj[prop].push === 'function') {
       obj[prop].push(value);
@@ -73,10 +140,8 @@
       obj[prop] = [value];
     }
 
-  };
+  }
 
-  provide('lil_', _);
+};
 
-}(typeof module !== 'undefined' ?
-    function (a, b) { module.exports = b; } :
-    provide));
+}, true);
