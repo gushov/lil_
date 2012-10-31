@@ -15,11 +15,11 @@ module.exports = function(grunt) {
       files: ['grunt.js', 'lib/**/*.js', 'test/*.js']
     },
     mdlldr: {
-      config: {
-        modulePath: './lib',
-        staticPath: './dist'
-      },
-      'lil_.js': ['lil_.js']
+      lil_: {
+        root: './lib',
+        src: ['lil_.js'],
+        dest: './dist/lil_.js'
+      }
     },
     buster: {
       test: {
