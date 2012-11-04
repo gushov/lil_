@@ -8,6 +8,18 @@ var _ = typeof module !== 'undefined' ? require('../lib/lil_') : require('lil_')
 
 buster.testCase("lil_", {
 
+  "should return type as a string": function () {
+
+    assert.equals(_.typeOf(''), 'string');
+    assert.equals(_.typeOf(false), 'boolean');
+    assert.equals(_.typeOf(0), 'number');
+    assert.equals(_.typeOf([]), 'array');
+    assert.equals(_.typeOf({}), 'object');
+    assert.equals(_.typeOf(null), 'null');
+    assert.equals(_.typeOf(undefined), 'undefined');
+
+  },
+
   "should iterate each array element": function () {
 
     var cbSpy = this.spy();
@@ -70,6 +82,32 @@ buster.testCase("lil_", {
     assert.calledWith(cbSpy, 'milk', 2, 1);
     assert.calledWith(cbSpy, 'cheese', 3, 2);
     assert.equals(cbSpy.thisValues[0], ctx);
+
+  },
+
+  "should extend the values of an object": function () {
+
+    var obj = {
+      isTrue: true,
+      str: 'what'
+    };
+
+    var src = {
+      isTrue: false,
+      num: 0,
+      arr: [1, 2, 3],
+      str: 'hello',
+      sub: { yo: { its: "me" } }
+    };
+
+    _.extend(obj, src);
+    assert.equals(obj, {
+      isTrue: false,
+      num: 0,
+      arr: [1, 2, 3],
+      str: 'hello',
+      sub: { yo: { its: "me" } }
+    });
 
   },
 

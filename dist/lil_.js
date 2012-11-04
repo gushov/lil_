@@ -74,6 +74,19 @@ provide('lil_', function (require, module, exports) {
 
 module.exports = {
 
+  typeOf: function (x) {
+
+    var type = typeof x;
+
+    if (type === 'object') {
+      type = Array.isArray(x) ? 'array' : type;
+      type = x === null ? 'null' : type;
+    }
+
+    return type;
+
+  },
+
   each: function (arr, func, ctx) {
 
     if (arr && arr.length) {
@@ -107,6 +120,31 @@ module.exports = {
     keys.forEach(function (name, i) {
       func.call(ctx, name, obj[name], i);
     });
+
+  },
+
+  extend: function (obj, src) {
+
+    this.eachIn(src, function (name, value) {
+
+      var type = this.typeOf(value);
+
+      switch (type) {
+        case 'object':
+          obj[name] = obj[name] || {};
+          this.extend(obj[name] || {}, value);
+          break;
+        case 'boolean':
+          obj[name] = obj[name] && value;
+          break;
+        default:
+          obj[name] = value;
+          break;
+      }
+
+      return obj;
+
+    }, this);
 
   },
 
