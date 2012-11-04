@@ -61,13 +61,15 @@ buster.testCase("lil_", {
       'milk': 2,
       'cheese': 3
     };
+    var ctx = {};
 
-    _.eachIn(testObj, cbSpy);
+    _.eachIn(testObj, cbSpy, ctx);
 
     assert.equals(cbSpy.callCount, 3);
     assert.calledWith(cbSpy, 'butter', 1, 0);
     assert.calledWith(cbSpy, 'milk', 2, 1);
     assert.calledWith(cbSpy, 'cheese', 3, 2);
+    assert.equals(cbSpy.thisValues[0], ctx);
 
   },
 

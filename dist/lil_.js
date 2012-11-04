@@ -1,4 +1,4 @@
-/*! lil_ - v0.0.0 - 2012-10-30
+/*! lil_ - v0.0.0 - 2012-11-04
  * Copyright (c) 2012 August Hovland <gushov@gmail.com>; Licensed MIT */
 
 (function (ctx) {
@@ -100,12 +100,12 @@ module.exports = {
 
   },
 
-  eachIn: function (obj, func) {
+  eachIn: function (obj, func, ctx) {
 
     var keys = Object.keys(obj) || [];
 
     keys.forEach(function (name, i) {
-      func(name, obj[name], i);
+      func.call(ctx, name, obj[name], i);
     });
 
   },
