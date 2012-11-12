@@ -85,6 +85,25 @@ buster.testCase("lil_", {
 
   },
 
+  "should map the given object": function () {
+
+    var testObj = {
+      a:1,
+      b:2,
+      c:3
+    };
+
+    var cbStub = this.stub();
+    cbStub.returnsArg(1);
+
+    assert.equals(_.mapIn(testObj, cbStub), { 'a':1, 'b':2, 'c':3 });
+    assert.calledThrice(cbStub);
+    assert.calledWith(cbStub, 'a');
+    assert.calledWith(cbStub, 'b');
+    assert.calledWith(cbStub, 'c');
+
+  },
+
   "should extend the values of an object": function () {
 
     var obj = {
@@ -135,7 +154,7 @@ buster.testCase("lil_", {
 
   },
 
-  "should return only selected keys": function () {
+  "should return only selected array keys": function () {
 
     var obj = {
       x: 'x',
@@ -145,6 +164,31 @@ buster.testCase("lil_", {
       d: 'd'
     };
     var keys = ['a', 'b', 'c'];
+    var result = _.pick(obj, keys);
+
+    assert.equals(Object.keys(result).length, 3);
+    refute.defined(result.a);
+    assert.equals(result.b, 'b');
+    assert.equals(result.c, 'c');
+
+  },
+
+  "should return only selected object keys": function () {
+
+    var obj = {
+      x: 'x',
+      b: 'b',
+      z: 'z',
+      c: 'c',
+      d: 'd'
+    };
+
+    var keys = {
+      'a': null,
+      'b': undefined,
+      'c': false
+    };
+
     var result = _.pick(obj, keys);
 
     assert.equals(Object.keys(result).length, 3);
