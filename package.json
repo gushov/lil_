@@ -10,22 +10,17 @@
   "engines": {
     "node": "~0.6.18"
   },
-  "dependencies": {
-    "lilprovider": ">= 0.0.x"
-  },
+  "dependencies": {},
   "devDependencies": {
     "grunt": ">= 0.3.x",
     "buster": ">= 0.6.x",
-    "grunt-buster": ">= 0.1.x"
+    "grunt-buster": ">= 0.1.x",
+    "grunt-mdlldr": ">= 0.1.x"
   },
   "optionalDependencies": {
     "lilprovider": ">= 0.0.x"
   },
-  "licenses": [
-    {
-      "type": "MIT"
-    }
-  ],
+  "licenses": [{ "type": "MIT" }],
   "main": "lib/lil_.js",
   "scripts": {
     "test": "grunt buster"
