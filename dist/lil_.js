@@ -1,4 +1,4 @@
-/*! lil_ - v0.0.0 - 2012-11-12
+/*! lil_ - v0.0.1 - 2012-12-05
  * Copyright (c) 2012 August Hovland <gushov@gmail.com>; Licensed MIT */
 
 (function (ctx) {
@@ -135,35 +135,58 @@ module.exports = {
 
   },
 
-  extend: function (obj, src) {
+  walk: function (target, source, func, walkArrays) {
 
-    this.eachIn(src, function (name, value) {
+    var self = this;
 
-      var type = this.typeOf(value);
+    var walkObj = function (target, source) {
 
-      switch (type) {
-        case 'object':
-          obj[name] = obj[name] || {};
-          this.extend(obj[name] || {}, value);
-          break;
-        case 'boolean':
-          obj[name] = obj[name] && value;
-          break;
-        default:
-          obj[name] = value;
-          break;
+      self.eachIn(source, function (name, obj) {
+        step(target[name], obj, name, target);
+      });
+
+    };
+
+    var step = function (target, source, name, parent) {
+
+      var type = self.typeOf(source);
+
+      if (type === 'object') {
+
+        if (!target && parent) {
+          target = parent[name] = {};
+        }
+        
+        walkObj(target, source);
+
+      } else {
+        func(target, source, name, parent);
       }
 
-      return obj;
+    };
 
-    }, this);
+    step(target, source);
+
+  },
+
+  extend: function (obj, src) {
+
+    this.walk(obj, src, function (obj, src, name, parent) {
+      parent[name] = src;
+    });
+
+    return obj;
 
   },
 
   defaults: function (obj, defaults) {
 
-    this.eachIn(defaults, function (name, value) {
-      if (!obj[name]) { obj[name] = value; }
+    this.walk(obj, defaults, function (obj, src, name, parent) {
+
+      if (!obj) {
+        parent[name] = src;
+      }
+
     });
 
     return obj;

@@ -54,9 +54,13 @@ Calls iterator with each proptery of object.
 
 Returns new object with property values set from mapper.
 
+### walk(target, src, iterator)
+
+walks src object graph and call iterator with src value, object value, proptery name and target parent object
+
 ### extend(target, src)
 
-Walk the object graph and copy properties of src to target.
+copy properties of src to target.
 
 ### defaults(target, src)
 

@@ -107,6 +107,7 @@ buster.testCase("lil_", {
   "should extend the values of an object": function () {
 
     var obj = {
+      a: 'a',
       isTrue: true,
       str: 'what'
     };
@@ -121,6 +122,7 @@ buster.testCase("lil_", {
 
     _.extend(obj, src);
     assert.equals(obj, {
+      a: 'a',
       isTrue: false,
       num: 0,
       arr: [1, 2, 3],
@@ -213,6 +215,41 @@ buster.testCase("lil_", {
     assert.equals(classRoom.boys[0], 'kyle');
     assert.equals(classRoom.teacher, 'azure');
     
+  },
+
+  "should walk objects properties": function () {
+
+    var cbSpy = this.spy();
+
+    var target = {
+      a: 1,
+      b: {
+        b1: 'b1'
+      },
+      e: [1, 2]
+    };
+
+    var source = {
+      a: 1,
+      b: {
+        b1: 'b1',
+        b2: 'b2'
+      },
+      d: {
+        d1: 'd1'
+      },
+      e: [1, 2]
+    };
+
+    _.walk(target, source, cbSpy);
+
+    assert.equals(cbSpy.callCount, 5);
+    assert(cbSpy.getCall(0).calledWith(1, 1, 'a', target));
+    assert(cbSpy.getCall(1).calledWith('b1', 'b1', 'b1', target.b));
+    assert(cbSpy.getCall(2).calledWith(undefined, 'b2', 'b2', target.b));
+    assert(cbSpy.getCall(3).calledWith(undefined, 'd1', 'd1', {}));
+    assert(cbSpy.getCall(4).calledWith([1, 2], [1, 2], 'e', target));
+
   }
 
 });
