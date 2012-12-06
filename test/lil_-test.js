@@ -241,14 +241,32 @@ buster.testCase("lil_", {
       e: [1, 2]
     };
 
-    _.walk(target, source, cbSpy);
+    _.walk(target, source, cbSpy, true);
 
     assert.equals(cbSpy.callCount, 5);
-    assert(cbSpy.getCall(0).calledWith(1, 1, 'a', target));
-    assert(cbSpy.getCall(1).calledWith('b1', 'b1', 'b1', target.b));
-    assert(cbSpy.getCall(2).calledWith(undefined, 'b2', 'b2', target.b));
-    assert(cbSpy.getCall(3).calledWith(undefined, 'd1', 'd1', {}));
-    assert(cbSpy.getCall(4).calledWith([1, 2], [1, 2], 'e', target));
+    assert(cbSpy.getCall(0).calledWith(1, 1, 'a'));
+    assert(cbSpy.getCall(0).calledOn(target));
+    assert(cbSpy.getCall(1).calledWith('b1', 'b1', 'b1'));
+    assert(cbSpy.getCall(1).calledOn(target.b));
+    assert(cbSpy.getCall(2).calledWith(undefined, 'b2', 'b2'));
+    assert(cbSpy.getCall(2).calledOn(target.b));
+    assert(cbSpy.getCall(3).calledWith(undefined, 'd1', 'd1'));
+    assert(cbSpy.getCall(3).calledOn(target.d));
+    assert(cbSpy.getCall(4).calledWith([1, 2], [1, 2], 'e'));
+    assert(cbSpy.getCall(4).calledOn(target));
+
+  },
+
+  "should return true of test matches object": function () {
+
+    var a1 = { a: 1 };
+    var b1 = {};
+
+    var a2 = { a: { b: { c: 1 } } };
+    var b2 = { a: { b: { c: 1 } } };
+
+    refute(_.match(b1, a1));
+    assert(_.match(b2, a2));
 
   }
 

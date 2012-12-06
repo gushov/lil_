@@ -2,13 +2,13 @@
   "author": "August Hovland <gushov@gmail.com>",
   "name": "lil_",
   "description": "A li'l utility library",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "repository": {
     "type": "git",
     "url": "git://github.com/gushov/lil_.git"
   },
   "engines": {
-    "node": "~0.6.18"
+    "node": ">= 0.8.x"
   },
   "devDependencies": {
     "grunt": ">= 0.3.x",

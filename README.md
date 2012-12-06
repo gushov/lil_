@@ -66,9 +66,13 @@ copy properties of src to target.
 
 Copy src properties to target if not already present in target.
 
+### match(object, test)
+
+Returns true if test properties are "===" to object properties.
+
 ### pick(target, keys)
 
-Returns copy of target with only properties present in keys
+Returns copy of target with only properties present in keys.
 
 ## License
 Copyright (c) 2012 August Hovland

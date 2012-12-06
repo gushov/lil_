@@ -1,4 +1,4 @@
-/*! lil_ - v0.0.1 - 2012-12-05
+/*! lil_ - v0.0.2 - 2012-12-06
  * Copyright (c) 2012 August Hovland <gushov@gmail.com>; Licensed MIT */
 
 (function (ctx) {
@@ -135,7 +135,7 @@ module.exports = {
 
   },
 
-  walk: function (target, source, func, walkArrays) {
+  walk: function (target, source, func, fill) {
 
     var self = this;
 
@@ -153,14 +153,14 @@ module.exports = {
 
       if (type === 'object') {
 
-        if (!target && parent) {
+        if (!target && parent && fill) {
           target = parent[name] = {};
         }
         
         walkObj(target, source);
 
       } else {
-        func(target, source, name, parent);
+        func.call(parent, target, source, name);
       }
 
     };
@@ -171,9 +171,9 @@ module.exports = {
 
   extend: function (obj, src) {
 
-    this.walk(obj, src, function (obj, src, name, parent) {
-      parent[name] = src;
-    });
+    this.walk(obj, src, function (target, src, name) {
+      this[name] = src;
+    }, true);
 
     return obj;
 
@@ -181,15 +181,27 @@ module.exports = {
 
   defaults: function (obj, defaults) {
 
-    this.walk(obj, defaults, function (obj, src, name, parent) {
+    this.walk(obj, defaults, function (target, src, name) {
 
-      if (!obj) {
-        parent[name] = src;
+      if (!target) {
+        this[name] = src;
       }
 
-    });
+    }, true);
 
     return obj;
+
+  },
+
+  match: function (obj, test) {
+
+    var isMatch = true;
+
+    this.walk(obj, test, function (target, src) {
+      isMatch = (target === src);
+    });
+
+    return isMatch;
 
   },
 
