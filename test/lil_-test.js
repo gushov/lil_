@@ -75,7 +75,7 @@ buster.testCase("lil_", {
     };
     var ctx = {};
 
-    _.eachIn(testObj, cbSpy, ctx);
+    _.each(testObj, cbSpy, ctx);
 
     assert.equals(cbSpy.callCount, 3);
     assert.calledWith(cbSpy, 'butter', 1, 0);
@@ -96,7 +96,7 @@ buster.testCase("lil_", {
     var cbStub = this.stub();
     cbStub.returnsArg(1);
 
-    assert.equals(_.mapIn(testObj, cbStub), { 'a':1, 'b':2, 'c':3 });
+    assert.equals(_.map(testObj, cbStub), { 'a':1, 'b':2, 'c':3 });
     assert.calledThrice(cbStub);
     assert.calledWith(cbStub, 'a');
     assert.calledWith(cbStub, 'b');
@@ -198,23 +198,6 @@ buster.testCase("lil_", {
     assert.equals(result.b, 'b');
     assert.equals(result.c, 'c');
 
-  },
-
-  "should push elements onto an array": function () {
-
-    var classRoom = {
-      girls: ['ruby'],
-      teacher: 'azure'
-    };
-
-    _.pushOn(classRoom, 'girls', 'georgia');
-    _.pushOn(classRoom, 'boys', 'kyle');
-    _.pushOn(classRoom, 'teacher', 'martina');
-
-    assert.equals(classRoom.girls[1], 'georgia');
-    assert.equals(classRoom.boys[0], 'kyle');
-    assert.equals(classRoom.teacher, 'azure');
-    
   },
 
   "should walk objects properties": function () {
