@@ -1,4 +1,4 @@
-/*! lil_ - v0.0.4 - 2013-01-15
+/*! lil_ - v0.0.5 - 2013-01-15
  * Copyright (c) 2013 August Hovland <gushov@gmail.com>; Licensed MIT */
 
 (function (ctx) {
@@ -108,11 +108,25 @@ module.exports = {
 
   },
 
-  every: function (arr, func, ctx) {
+  every: function (thing, func, ctx) {
 
-    if (arr && arr.length) {
-      return arr.every(func, ctx);
+    var type = this.typeOf(thing);
+    var keys;
+
+    if (type === 'array' && thing.length) {
+
+      return thing.every(func, ctx);
+
+    } else if (type === 'object') {
+
+      keys = thing ? Object.keys(thing) : [];
+
+      return keys.every(function (name, i) {
+        return func.call(ctx, name, thing[name], i);
+      });
+
     }
+
     return false;
 
   },

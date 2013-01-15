@@ -36,7 +36,7 @@ buster.testCase("lil_", {
 
   },
 
-  "should iterate until false is returned": function () {
+  "should iterate array until false is returned": function () {
 
     var testArray = [true, true, false, true, true];
     var testArray2 = [true, true, true, true];
@@ -47,6 +47,21 @@ buster.testCase("lil_", {
     assert.equals(cbStub.callCount, 3);
 
     assert(_.every(testArray2, cbStub));
+    assert.equals(cbStub.callCount, 7);
+
+  },
+
+  "should iterate object until false is returned": function () {
+
+    var testObj = { a: true, b: true, c: false, d: true, e: true };
+    var testObj2 = { a: true, b: true, c: true, d: true };
+    var cbStub = this.stub();
+    cbStub.returnsArg(1);
+
+    refute(_.every(testObj, cbStub));
+    assert.equals(cbStub.callCount, 3);
+
+    assert(_.every(testObj2, cbStub));
     assert.equals(cbStub.callCount, 7);
 
   },

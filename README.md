@@ -42,9 +42,9 @@ Returns name of thing corresponding with typeof operator except nulls return "nu
 
 Calls iterator function with each element or property of thing.
 
-### every(array, test, context)
+### every(thing, test, context)
 
-If iterator returns true for each element in array function returns true otherwise iteration stops and function returns false.
+If iterator returns true for each element or property value of thing function returns true otherwise iteration stops and function returns false.
 
 ### map(thing, mapper, context)
 
