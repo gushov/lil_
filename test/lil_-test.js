@@ -66,6 +66,35 @@ buster.testCase("lil_", {
 
   },
 
+  "should iterate array until true is returned": function () {
+
+    var testArray = [false, false, false, true, false];
+    var testArray2 = [false, false, false, false];
+    var cbStub = this.stub();
+    cbStub.returnsArg(0);
+
+    assert(_.some(testArray, cbStub));
+    assert.equals(cbStub.callCount, 4);
+
+    refute(_.some(testArray2, cbStub));
+    assert.equals(cbStub.callCount, 8);
+
+  },
+
+  "should iterate object until true is returned": function () {
+
+    var testObj = { a: false, b: false, c: false, d: true, e: false };
+    var testObj2 = { a: false, b: false, c: false, d: false };
+    var cbStub = this.stub();
+    cbStub.returnsArg(1);
+
+    assert(_.some(testObj, cbStub));
+    assert.equals(cbStub.callCount, 4);
+
+    refute(_.some(testObj2, cbStub));
+    assert.equals(cbStub.callCount, 8);
+
+  },
   "should map the given array": function () {
 
     var testArray = [1, 2, 3];
@@ -119,30 +148,50 @@ buster.testCase("lil_", {
 
   },
 
+
+  "should return array withOut given values": function () {
+
+    var testArray = [1, 1, 3, 4, 1, 5, 6, 1, 7, 1, 1];
+    assert.equals(_.withOut(testArray, 1), [3, 4, 5, 6, 7]);
+
+  },
+
   "should extend the values of an object": function () {
 
     var obj = {
       a: 'a',
       isTrue: true,
-      str: 'what'
+      str: 'what',
+      def: 'def'
     };
 
-    var src = {
+    var src1 = {
       isTrue: false,
       num: 0,
       arr: [1, 2, 3],
       str: 'hello',
-      sub: { yo: { its: "me" } }
+      sub: { yo: { its: "me" } },
+      def: 'def1'
     };
 
-    _.extend(obj, src);
+    var src2 = {
+      def: 'def2'
+
+    };
+
+    var src3 = {
+      def: 'def3'
+    };
+
+    _.extend(obj, src1, src2, src3);
     assert.equals(obj, {
       a: 'a',
       isTrue: false,
       num: 0,
       arr: [1, 2, 3],
       str: 'hello',
-      sub: { yo: { its: "me" } }
+      sub: { yo: { its: "me" } },
+      def: 'def3'
     });
 
   },

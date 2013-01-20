@@ -42,9 +42,13 @@ Returns name of thing corresponding with typeof operator except nulls return "nu
 
 Calls iterator function with each element or property of thing.
 
-### every(thing, test, context)
+### every(thing, iterator, context)
 
 If iterator returns true for each element or property value of thing function returns true otherwise iteration stops and function returns false.
+
+### some(thing iterator, context)
+
+If iterator returns false for element or property value of thing function returns false otherwise iteration stops and function returns true.
 
 ### map(thing, mapper, context)
 
@@ -54,7 +58,7 @@ Returns new array or object populated with elements or properties returned by ma
 
 walks src object graph and call iterator with src value, object value, proptery name and target parent object
 
-### extend(target, src)
+### extend(target, src, [src...])
 
 copy properties of src to target.
 

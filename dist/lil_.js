@@ -1,4 +1,4 @@
-/*! lil_ - v0.0.5 - 2013-01-15
+/*! lil_ - v0.0.6 - 2013-01-20
  * Copyright (c) 2013 August Hovland <gushov@gmail.com>; Licensed MIT */
 
 (function (ctx) {
@@ -131,6 +131,29 @@ module.exports = {
 
   },
 
+  some: function (thing, func, ctx) {
+
+    var type = this.typeOf(thing);
+    var keys;
+
+    if (type === 'array' && thing.length) {
+
+      return thing.some(func, ctx);
+
+    } else if (type === 'object') {
+
+      keys = thing ? Object.keys(thing) : [];
+
+      return keys.some(function (name, i) {
+        return func.call(ctx, name, thing[name], i);
+      });
+
+    }
+
+    return false;
+
+  },
+
   map: function (thing, func, ctx) {
 
     var type = this.typeOf(thing);
@@ -149,6 +172,22 @@ module.exports = {
       }, ctx);
 
     }
+
+    return result;
+
+  },
+
+  withOut: function (arr, value) {
+
+    var result = [];
+
+    this.each(arr, function (element) {
+
+      if (element !== value) {
+        result.push(element);
+      }
+
+    });
 
     return result;
 
@@ -188,11 +227,18 @@ module.exports = {
 
   },
 
-  extend: function (obj, src) {
+  extend: function () {
 
-    this.walk(obj, src, function (target, src, name) {
-      this[name] = src;
-    }, true);
+    var args = Array.prototype.slice.call(arguments);
+    var obj = args.shift();
+
+    this.each(args, function (src) {
+
+      this.walk(obj, src, function (target, src, name) {
+        this[name] = src;
+      }, true);
+
+    }, this);
 
     return obj;
 
