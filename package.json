@@ -2,7 +2,7 @@
   "author": "August Hovland <gushov@gmail.com>",
   "name": "lil_",
   "description": "A li'l utility library",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "repository": {
     "type": "git",
     "url": "git://github.com/gushov/lil_.git"

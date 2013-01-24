@@ -54,6 +54,10 @@ If iterator returns false for element or property value of thing function return
 
 Returns new array or object populated with elements or properties returned by mapper for each element or property in thing.
 
+### withOut(array, value)
+
+Returns copy of array with all elements equal to value removed. 
+
 ### walk(target, src, iterator)
 
 walks src object graph and call iterator with src value, object value, proptery name and target parent object
