@@ -1,5 +1,6 @@
-/*! lil_ - v0.0.6 - 2013-01-24
- * Copyright (c) 2013 August Hovland <gushov@gmail.com>; Licensed MIT */
+ /*jshint curly:true, eqeqeq:true, immed:true, latedef:true,
+  newcap:true, noarg:true, sub:true, undef:true, boss:true,
+  strict:false, eqnull:true, browser:true, node:true */
 
 (function (ctx) {
 
@@ -66,7 +67,7 @@
 
 }(this));
  
-provide('lil_', function (require, module, exports) {
+define('lil_', function (require, module, exports) {
 
 /*jshint curly:true, eqeqeq:true, immed:true, latedef:true,
   newcap:true, noarg:true, sub:true, undef:true, boss:true,
@@ -286,4 +287,4 @@ module.exports = {
 
 };
 
-}, true);
+});

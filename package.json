@@ -2,7 +2,7 @@
   "author": "August Hovland <gushov@gmail.com>",
   "name": "lil_",
   "description": "A li'l utility library",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "repository": {
     "type": "git",
     "url": "git://github.com/gushov/lil_.git"
@@ -11,10 +11,14 @@
     "node": ">= 0.8.x"
   },
   "devDependencies": {
-    "grunt": ">= 0.3.x",
+    "grunt": ">= 0.4.x",
     "buster": ">= 0.6.x",
     "grunt-buster": ">= 0.1.x",
-    "grunt-mdlldr": ">= 0.1.x"
+    "grunt-mdlldr": ">= 0.0.x",
+    "grunt-contrib-jshint": ">= 0.1.x",
+    "grunt-contrib-concat": ">= 0.1.x",
+    "grunt-contrib-uglify": ">= 0.1.x",
+    "grunt-contrib-watch": ">= 0.1.x"
   },
   "optionalDependencies": {
     "lilprovider": ">= 0.0.x"
